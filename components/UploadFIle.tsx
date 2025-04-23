@@ -31,20 +31,20 @@ const UploadFile: React.FC = () => {
 	const [images, setImages] = useState<TImage[]>([]);
 	const [loading, setLoading] = useState(false);
 
-	const onPreview = async (file: UploadFile) => {
-		let src = file.url as string;
-		if (!src) {
-			src = await new Promise((resolve) => {
-				const reader = new FileReader();
-				reader.readAsDataURL(file.originFileObj as FileType);
-				reader.onload = () => resolve(reader.result as string);
-			});
-		}
-		const imgWindow = window.open(src);
-		const img = document.createElement("img");
-		img.src = src;
-		imgWindow?.document.body.appendChild(img);
-	};
+	// const onPreview = async (file: UploadFile) => {
+	// 	let src = file.url as string;
+	// 	if (!src) {
+	// 		src = await new Promise((resolve) => {
+	// 			const reader = new FileReader();
+	// 			reader.readAsDataURL(file.originFileObj as FileType);
+	// 			reader.onload = () => resolve(reader.result as string);
+	// 		});
+	// 	}
+	// 	const imgWindow = window.open(src);
+	// 	const img = document.createElement("img");
+	// 	img.src = src;
+	// 	imgWindow?.document.body.appendChild(img);
+	// };
 	const handleChange: UploadProps["onChange"] = ({ file }) => {
 		setFileList([file]);
 		handleSearch(file);
