@@ -15,7 +15,7 @@ const getBase64 = (file: FileType): Promise<string> =>
 		reader.onerror = (error) => reject(error);
 	});
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
-const url = "http://localhost:5000";
+const url = process.env.NEXT_PUBLIC_SERVER;
 const UploadFile: React.FC = () => {
 	const [previewOpen, setPreviewOpen] = useState(false);
 	const [previewImage, setPreviewImage] = useState("");
