@@ -19,33 +19,16 @@ const url = "http://localhost:5000";
 const UploadFile: React.FC = () => {
 	const [previewOpen, setPreviewOpen] = useState(false);
 	const [previewImage, setPreviewImage] = useState("");
-	const [fileList, setFileList] = useState<UploadFile[]>([
-		{
-			uid: "-1",
-			name: "image.png",
-			status: "done",
-			url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-		},
-	]);
+	const [fileList, setFileList] = useState<UploadFile[]>([]);
 
 	const [images, setImages] = useState<TImage[]>([]);
 	const [loading, setLoading] = useState(false);
 
-	// const onPreview = async (file: UploadFile) => {
-	// 	let src = file.url as string;
-	// 	if (!src) {
-	// 		src = await new Promise((resolve) => {
-	// 			const reader = new FileReader();
-	// 			reader.readAsDataURL(file.originFileObj as FileType);
-	// 			reader.onload = () => resolve(reader.result as string);
-	// 		});
-	// 	}
-	// 	const imgWindow = window.open(src);
-	// 	const img = document.createElement("img");
-	// 	img.src = src;
-	// 	imgWindow?.document.body.appendChild(img);
-	// };
-	const handleChange: UploadProps["onChange"] = ({ file }) => {
+	const handleChange: UploadProps["onChange"] = ({ file, event }) => {
+		console.log("🚀 ~ event:", event);
+		// if (event. === 'remove') {
+		// 	reset()
+		// }
 		setFileList([file]);
 		handleSearch(file);
 	};
@@ -79,18 +62,27 @@ const UploadFile: React.FC = () => {
 			setLoading(false);
 		}
 	};
+
+	const reset = () => {
+		setFileList([]);
+		setPreviewOpen(false);
+		setPreviewImage("");
+		setImages([]);
+	};
 	return (
-		<div className="flex flex-col h-full overflow-auto gap-5 p-10">
-			<ImgCrop rotationSlider>
+		<div className="flex flex-col h-full overflow-auto gap-5 p-10 w-full">
+			<ImgCrop rotationSlider maxZoom={10}>
 				<Upload
 					listType="picture-card"
 					fileList={fileList}
 					onChange={handleChange}
 					onPreview={handlePreview}
+					onRemove={() => reset()}
 				>
 					{fileList.length < 5 && "+ Upload"}
 				</Upload>
 			</ImgCrop>
+
 			{previewImage && (
 				<Image
 					wrapperStyle={{ display: "none" }}
