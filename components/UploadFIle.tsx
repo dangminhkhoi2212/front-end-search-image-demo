@@ -24,7 +24,7 @@ const UploadFile: React.FC = () => {
 	const [images, setImages] = useState<TImage[]>([]);
 	const [loading, setLoading] = useState(false);
 
-	const handleChange: UploadProps["onChange"] = ({ file, event }) => {
+	const handleChange: UploadProps["onChange"] = ({ file }) => {
 		setFileList([file]);
 		handleSearch(file);
 	};
