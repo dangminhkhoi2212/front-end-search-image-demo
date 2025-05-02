@@ -25,10 +25,6 @@ const UploadFile: React.FC = () => {
 	const [loading, setLoading] = useState(false);
 
 	const handleChange: UploadProps["onChange"] = ({ file, event }) => {
-		console.log("🚀 ~ event:", event);
-		// if (event. === 'remove') {
-		// 	reset()
-		// }
 		setFileList([file]);
 		handleSearch(file);
 	};
