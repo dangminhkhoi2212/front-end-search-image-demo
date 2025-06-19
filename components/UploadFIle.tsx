@@ -20,13 +20,15 @@ const UploadFile: React.FC = () => {
 	const [previewOpen, setPreviewOpen] = useState(false);
 	const [previewImage, setPreviewImage] = useState("");
 	const [fileList, setFileList] = useState<UploadFile[]>([]);
+	console.log("🚀 ~ fileList:", fileList);
 
 	const [images, setImages] = useState<TImage[]>([]);
 	const [loading, setLoading] = useState(false);
 
-	const handleChange: UploadProps["onChange"] = ({ file }) => {
-		setFileList([file]);
-		handleSearch(file);
+	const handleChange: UploadProps["onChange"] = ({ file, fileList }) => {
+		if (fileList?.length !== 0) {
+			handleSearch(file);
+		}
 	};
 	const handlePreview = async (file: UploadFile) => {
 		if (!file.url && !file.preview) {
@@ -69,11 +71,12 @@ const UploadFile: React.FC = () => {
 		<div className="flex flex-col h-full overflow-auto gap-5 p-10 w-full">
 			<ImgCrop rotationSlider maxZoom={10}>
 				<Upload
+					key={fileList.length}
 					listType="picture-card"
-					fileList={fileList}
+					// fileList={fileList}
 					onChange={handleChange}
 					onPreview={handlePreview}
-					onRemove={() => reset()}
+					maxCount={1}
 				>
 					{fileList.length < 5 && "+ Upload"}
 				</Upload>
